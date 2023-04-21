@@ -18,7 +18,21 @@ namespace Online_Mobile_Recharge.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult HowToUse()
+        {
+            return View();
+        }
+
+        public IActionResult History()
+        {
+            return View();
+        }
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        public IActionResult SetUpNewPlan()
         {
             return View();
         }
