@@ -7,32 +7,69 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Online_Mobile_Recharge.styles.css" asp-append-version="true" />
+
+    <style>
+
+        .navbar{
+            background-color: #CBF1F5;
+            height: 5em;
+        }
+
+        .title{
+            font-weight: bolder;
+            margin-left:5em;
+            font-size:24px;
+        }
+
+        .navbar-nav{
+            margin-left:15em;
+        }
+
+        .options{
+            color: #69B5B9 !important;
+            font-weight: 500;
+            margin-left:3em;
+        }
+
+        .options:hover, .options:focus {
+                color: #027980 !important;
+            font-weight: 500;
+        }
+
+        .optionsSpl {
+            color: #000 !important;
+            font-weight: bolder;
+            margin-left: 4em;
+        }
+
+    </style>
+
 </head>
-<body>
+<body style="background-color:#E3FDFD">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" >
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Online_Mobile_Recharge</a>
+                <a class="navbar-brand title" asp-area="" asp-controller="Home" asp-action="Index">EasyRecharge</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link options" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="HowToUse">HowToUse</a>
+                            <a class="nav-link options" asp-area="" asp-controller="Home" asp-action="HowToUse">How To Use</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="History">History</a>
+                            <a class="nav-link options" asp-area="" asp-controller="Home" asp-action="History">History</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                            <a class="nav-link options" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SetUpNewPlan">Set New Plan</a>
+                            <a class="nav-link optionsSpl" asp-area="" asp-controller="Home" asp-action="SetUpNewPlan" >Set New Plan</a>
                         </li>
                     </ul>
                 </div>
@@ -45,11 +82,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Online_Mobile_Recharge - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
