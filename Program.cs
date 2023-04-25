@@ -45,7 +45,7 @@ namespace Online_Mobile_Recharge
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=UserDetails}/{action=Index}/{id?}");
 
             app.Run();
         }

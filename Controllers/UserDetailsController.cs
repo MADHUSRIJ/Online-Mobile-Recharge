@@ -104,6 +104,30 @@ namespace Online_Mobile_Recharge.Controllers
             return View(userDetailsModel);
         }
 
+        //Get: UserDetails/HowToUse/5
+        public IActionResult HowToUse(int? id)
+        {
+            return View();
+        }
+
+        //Get: UserDetails/History/5
+        public IActionResult History(int? id)
+        {
+            return View();
+        }
+
+        //Get: UserDetails/ContactUs/5
+        public IActionResult ContactUs(int? id)
+        {
+            return View();
+        }
+
+        //Get: UserDetails/SetUpNewPlan/5
+        public IActionResult SetUpNewPlan(int? id)
+        {
+            return View();
+        }
+
         // POST: UserDetails/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
