@@ -24,6 +24,7 @@ namespace Online_Mobile_Recharge.Controllers
         {
             var applicationDbContext = _context.UserDetailsModel.Include(u => u.RechargePlans).Include(u => u.ServiceProvider);
             return View(await applicationDbContext.ToListAsync());
+
         }
 
         // GET: UserDetails/Details/5
@@ -42,6 +43,19 @@ namespace Online_Mobile_Recharge.Controllers
             {
                 return NotFound();
             }
+
+            if (id == null || _context.ServiceProviderModel == null)
+            {
+                return NotFound();
+            }
+
+            var serviceProviderModel = await _context.ServiceProviderModel
+                .FirstOrDefaultAsync(m => m.ServiceProviderId == userDetailsModel.ServiceProviderId);
+            if (serviceProviderModel == null)
+            {
+                return NotFound();
+            }
+
 
             return View(userDetailsModel);
         }
