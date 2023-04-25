@@ -51,5 +51,7 @@ namespace Online_Mobile_Recharge
         }
 
         public DbSet<Online_Mobile_Recharge.Models.UserDetailsModel>? UserDetailsModel { get; set; }
+
+        public DbSet<Online_Mobile_Recharge.Models.ServiceProviderModel>? ServiceProviderModel { get; set; }
     }
 }
