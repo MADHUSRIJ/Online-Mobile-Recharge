@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Online_Mobile_Recharge
 {
     public class Program
@@ -9,7 +11,22 @@ namespace Online_Mobile_Recharge
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            Console.WriteLine(builder.Configuration.GetConnectionString("rds"));
+
+
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("rds"))
+            );
+
             var app = builder.Build();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
