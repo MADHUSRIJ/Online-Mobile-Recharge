@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_Mobile_Recharge;
 
@@ -10,9 +11,11 @@ using Online_Mobile_Recharge;
 namespace Online_Mobile_Recharge.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230425161725_OnlineRecharge")]
+    partial class OnlineRecharge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +39,8 @@ namespace Online_Mobile_Recharge.Migrations
                     b.Property<int>("RechargePlanId")
                         .HasColumnType("int");
 
-                    b.Property<string>("RechargeValidity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RechargeValidity")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -63,9 +65,8 @@ namespace Online_Mobile_Recharge.Migrations
                     b.Property<int>("RechargePlanData")
                         .HasColumnType("int");
 
-                    b.Property<string>("RechargePlanName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RechargePlanName")
+                        .HasColumnType("int");
 
                     b.Property<int>("RechargePlanPrice")
                         .HasColumnType("int");
@@ -109,9 +110,8 @@ namespace Online_Mobile_Recharge.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()

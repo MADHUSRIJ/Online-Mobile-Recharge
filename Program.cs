@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Online_Mobile_Recharge
@@ -23,6 +24,16 @@ namespace Online_Mobile_Recharge
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("rds"))
             );
 
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options => {
+                   options.LoginPath = "/Auth/Login";
+                   options.LogoutPath = "/Auth/Logout";
+               });
+
+
+            builder.Services.AddAuthorization();
+
+
             var app = builder.Build();
 
             app.UseSwagger();
@@ -41,11 +52,12 @@ namespace Online_Mobile_Recharge
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=UserDetails}/{action=GetId}/{id?}");
+                pattern: "{controller=UserDetails}/{action=Index}/{id?}");
 
             app.Run();
         }

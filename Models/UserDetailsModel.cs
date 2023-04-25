@@ -11,7 +11,7 @@ namespace Online_Mobile_Recharge.Models
         public int UserId { get; set; }
 
         [Required]
-        public int Number { get; set; }
+        public string? Number { get; set; }
 
         [ForeignKey("ServiceProvider")]
         public int ServiceProviderId { get; set; }
@@ -21,17 +21,19 @@ namespace Online_Mobile_Recharge.Models
         public int RechargePlanId { get; set; }
 
         [Required]
-        public string MailId { get; set; }
+        public string? MailId { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
 
-        public virtual ServiceProviderModel ServiceProvider { get; set; }
+        public virtual ServiceProviderModel? ServiceProvider { get; set; }
 
-        public virtual RechargePlansModel RechargePlans { get; set; }
+        public virtual RechargePlansModel? RechargePlans { get; set; }
         
-        public virtual ICollection<RechargeLogsModel> RechargeLogs { get; set; }
+        public virtual ICollection<RechargeLogsModel>? RechargeLogs { get; set; }
+
+        public virtual WalletModel? Wallet { get; set; }
 
 
     }

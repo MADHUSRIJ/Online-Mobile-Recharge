@@ -15,7 +15,7 @@ namespace Online_Mobile_Recharge.Models
         public int ServiceProviderId { get; set; }
 
         [Required]
-        public int RechargePlanName { get; set; }
+        public string RechargePlanName { get; set; }
 
         [Required]
         public int RechargePlanValidity { get; set; }

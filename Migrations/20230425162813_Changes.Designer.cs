@@ -11,8 +11,8 @@ using Online_Mobile_Recharge;
 namespace Online_Mobile_Recharge.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230425045505_OnlineRecharge")]
-    partial class OnlineRecharge
+    [Migration("20230425162813_Changes")]
+    partial class Changes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,8 +39,9 @@ namespace Online_Mobile_Recharge.Migrations
                     b.Property<int>("RechargePlanId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RechargeValidity")
-                        .HasColumnType("int");
+                    b.Property<string>("RechargeValidity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -65,8 +66,9 @@ namespace Online_Mobile_Recharge.Migrations
                     b.Property<int>("RechargePlanData")
                         .HasColumnType("int");
 
-                    b.Property<int>("RechargePlanName")
-                        .HasColumnType("int");
+                    b.Property<string>("RechargePlanName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RechargePlanPrice")
                         .HasColumnType("int");
@@ -104,10 +106,7 @@ namespace Online_Mobile_Recharge.Migrations
             modelBuilder.Entity("Online_Mobile_Recharge.Models.UserDetailsModel", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("MailId")
                         .IsRequired()
@@ -133,6 +132,25 @@ namespace Online_Mobile_Recharge.Migrations
                     b.HasIndex("ServiceProviderId");
 
                     b.ToTable("UserDetailsModel");
+                });
+
+            modelBuilder.Entity("Online_Mobile_Recharge.Models.WalletModel", b =>
+                {
+                    b.Property<int>("WalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WalletId");
+
+                    b.ToTable("WalletModel");
                 });
 
             modelBuilder.Entity("Online_Mobile_Recharge.Models.RechargeLogsModel", b =>
@@ -179,9 +197,17 @@ namespace Online_Mobile_Recharge.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Online_Mobile_Recharge.Models.WalletModel", "Wallet")
+                        .WithOne("UserDetails")
+                        .HasForeignKey("Online_Mobile_Recharge.Models.UserDetailsModel", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("RechargePlans");
 
                     b.Navigation("ServiceProvider");
+
+                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Online_Mobile_Recharge.Models.RechargePlansModel", b =>
@@ -201,6 +227,12 @@ namespace Online_Mobile_Recharge.Migrations
             modelBuilder.Entity("Online_Mobile_Recharge.Models.UserDetailsModel", b =>
                 {
                     b.Navigation("RechargeLogs");
+                });
+
+            modelBuilder.Entity("Online_Mobile_Recharge.Models.WalletModel", b =>
+                {
+                    b.Navigation("UserDetails")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

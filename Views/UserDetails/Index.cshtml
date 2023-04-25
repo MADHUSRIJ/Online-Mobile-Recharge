@@ -11,6 +11,11 @@
         height: 15em;
     }
 
+    .Container3 {
+        margin-top: 3em;
+        height: 20em;
+    }
+
     .banner {
         background-color: #CBF1F5;
         margin-left: 3em;
@@ -50,14 +55,48 @@
         font-weight: 500;
     }
 
+    .history{
+        height: 500px;
+        background-color: white;
+        padding: 2em;
+        margin-left: 3em;
+        border-radius: 25px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .history-data{
+        height: 250px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
     .MyPlans {
         background: white;
         border-radius: 20px;
         padding: 2em;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+
+    }
+
+    .cont {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .box {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 
 </style>
+<div class="cont">
+   <div class="box">
+        <a asp-action="Logout" class="btn" asp-controller="Auth">Logout</a>
+
+   </div>
+</div>
 
 <div class="col mx-lg-5">
     <div class="row mx-lg-5 Container1">
@@ -65,27 +104,67 @@
             <p class="heading-text" style="color:black"> 5G Trial</p>
             <p class="sub-text" style="font-size:16px;margin-top:-1.3em;"> Unlimited </p>
             <h2 class="price-text"> @ViewBag.userDetails.Number</h2>
-            <p class="heading-text" style="color:#696868;margin-top:-0.5em;"> @ViewBag.serviceProvider.ServiceName</p>
-            <p class="sub-text" style="margin-top:-1em;"> Last Recharge on 23 Apr, 2023. </p>
+            <p class="heading-text" style="color:#696868;margin-top:-0.5em;"> @ViewBag.userDetails.ServiceProvider.ServiceName</p>
             <p class="sub-text" style="margin-top:1em;color:#69B5B9;font-weight:bold;"> Check Usage </p>
         </div>
         <div class="col-md-6 MyPlans">
             <div class="row">
                 <div class="col-md-6">
                     <p class="heading-text"> My Plans </p>
-                    <h2 class="price-text"> @ViewBag.rechargePlans.RechargePlanName </h2>
-                    <p class="sub-text"> Expires on 23 Apr, 2023. </p>
+                    <h2 class="price-text" style="font-size:20px;"> @ViewBag.userDetails.RechargePlans.RechargePlanName </h2>
+                    <p class="sub-text"> Validity - @ViewBag.userDetails.RechargePlans.RechargePlanValidity Days </p>
                     <button class="btn">RECHARGE</button>
                 </div>
                 <div class="col-md-1" style="border-left: 1px solid black; height: 100px;"></div>
 
                 <div class="col-md-5">
                     <p class="heading-text"> Money </p>
-                    <h2 class="price-text"> ₹ 2000</h2>
+                    <h2 class="price-text" style="font-size:20px;"> ₹ @ViewBag.userDetails.Wallet.Amount</h2>
                     <p class="sub-text"> in your wallet. </p>
                     <button class="btn">ADD MONEY</button>
 
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-lg-5 Container3">
+        <div class="col-md-11 history">
+            <p class="heading-text" style="font-size:28px;"> Recharge History </p>
+            <div class="history-data">
+                @foreach (var history in ViewBag.rechargeLogs)
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-9">
+                            <i class="bi bi-bookmark-check-fill" style="color: #807D7D;"> Plan</i>
+                            <p class="heading-text" style="font-size:20px;margin-top:-0em;color:black">@history.RechargePlans.RechargePlanName </p>
+                            <p class="sub-text" style="font-size:16px;color:black;">Recharge on @history.RechargeDate</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="heading-text" style="font-size:20px;color:#027980">₹ @history.RechargePlans.RechargePlanPrice</p>
+                        </div>
+                    </div>
+                    <div class="row" style="display: flex;">
+                        <div class="col-md-4">
+                            <p style="color: #807D7D;">Validity</p>
+                            <p style="margin-top:-1em">@history.RechargeValidity</p>
+                        </div>
+                         <div class="col-md-4">
+                            <p style="color: #807D7D;">Payment Mode</p>
+                            <p style="margin-top:-1em">Wallet</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p style="color: #807D7D;">Reference Number</p>
+
+                            <p style="margin-top:-1em">Easy @history.RechargePlanId@history.RechargeLogId</p>
+                        </div>
+                       
+                  
+                    </div>
+                 
+
+
+                }
             </div>
         </div>
     </div>
@@ -103,4 +182,5 @@
             </div>
         </div>
     </div>
+  
 </div>

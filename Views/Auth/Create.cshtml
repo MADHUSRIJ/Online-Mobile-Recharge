@@ -1,0 +1,104 @@
+﻿@model Online_Mobile_Recharge.Models.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutPartial.cshtml";
+}
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150vh;
+    }
+
+    .register {
+        border-radius: 20px;
+        padding: 2em;
+        background: white;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+
+    .btn {
+        background-color: #000 !important;
+        color: #fff !important;
+        font-size: 12px;
+        padding: 1em 5em 1em 5em;
+        border-radius: 10px;
+        margin-top: 2em;
+        font-weight: 500;
+    }
+
+    .form-group {
+        margin-top: 2em;
+    }
+
+        .form-group input {
+            margin-top: 1em;
+        }
+
+    .heading-text {
+        font-weight: 700;
+        color: #807D7D;
+    }
+
+    .price-text {
+        font-weight: bold;
+    }
+
+    .sub-text {
+        margin-top: -0.5em;
+        color: #807D7D;
+        font-size: 12px;
+    }
+
+</style>
+
+
+<div class="container">
+    <div class="row register">
+        <h3 class="price-text">EasyRecharge</h3>
+        <p class="sub-text">Regitser your account to make your mobile recharge easy.</p>
+       <div class="">
+            <form asp-action="Create">
+                
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Number" class="control-label">Mobile Number</label>
+                    <input asp-for="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ServiceProviderId" class="control-label"></label>
+                    <select asp-for="ServiceProviderId" class="form-control" asp-items="ViewBag.ServiceProviderId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RechargePlanId" class="control-label"></label>
+                    <select asp-for="RechargePlanId" class="form-control" asp-items="ViewBag.RechargePlanId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailId" class="control-label"></label>
+                    <input asp-for="MailId" class="form-control" />
+                    <span asp-validation-for="MailId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn" />
+                </div>
+            </form>
+            <a asp-action="Login" asp-controller="Auth" class="btn">Login</a>
+       </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

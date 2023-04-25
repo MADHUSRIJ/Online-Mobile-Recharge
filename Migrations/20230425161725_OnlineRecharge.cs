@@ -24,6 +24,20 @@ namespace Online_Mobile_Recharge.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WalletModel",
+                columns: table => new
+                {
+                    WalletId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WalletModel", x => x.WalletId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RechargePlansModel",
                 columns: table => new
                 {
@@ -49,8 +63,7 @@ namespace Online_Mobile_Recharge.Migrations
                 name: "UserDetailsModel",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
                     ServiceProviderId = table.Column<int>(type: "int", nullable: false),
                     RechargePlanId = table.Column<int>(type: "int", nullable: false),
@@ -70,6 +83,11 @@ namespace Online_Mobile_Recharge.Migrations
                         column: x => x.ServiceProviderId,
                         principalTable: "ServiceProviderModel",
                         principalColumn: "ServiceProviderId");
+                    table.ForeignKey(
+                        name: "FK_UserDetailsModel_WalletModel_UserId",
+                        column: x => x.UserId,
+                        principalTable: "WalletModel",
+                        principalColumn: "WalletId");
                 });
 
             migrationBuilder.CreateTable(
@@ -135,6 +153,9 @@ namespace Online_Mobile_Recharge.Migrations
 
             migrationBuilder.DropTable(
                 name: "RechargePlansModel");
+
+            migrationBuilder.DropTable(
+                name: "WalletModel");
 
             migrationBuilder.DropTable(
                 name: "ServiceProviderModel");

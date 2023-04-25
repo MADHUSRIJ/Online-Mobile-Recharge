@@ -1,0 +1,48 @@
+﻿@model Online_Mobile_Recharge.Models.RechargePlansModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RechargePlansModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RechargePlanName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RechargePlanName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RechargePlanValidity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RechargePlanValidity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RechargePlanPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RechargePlanPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RechargePlanData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RechargePlanData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ServiceProvider)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ServiceProvider.ServiceName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.RechargePlanId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

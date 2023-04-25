@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Online_Mobile_Recharge.Models.RechargePlansModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<style>
+    .Plans{
+        background: white;
+        border-radius: 20px;
+        padding: 2em;
+        margin: 2em;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+
+    .heading-text {
+        font-weight: 700;
+        color: black;
+    }
+
+    .price-text {
+        font-weight: bold;
+        margin-top: -0.5em;
+    }
+
+    .sub-text {
+        margin-top: -0.5em;
+        color: #807D7D;
+        font-size: 12px;
+    }
+
+    .btn {
+        background-color: #000 !important;
+        color: #fff !important;
+        font-size: 12px;
+        padding: 1em 2em 1em 2em;
+        border-radius: 10px;
+        margin-top: 1em;
+        font-weight: 500;
+    }
+</style>
+
+
+   
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 Plans">
+            <p class="sub-text"> @Html.DisplayFor(modelItem => item.RechargePlanName) </p>
+            <h3 class="price-text">₹  @Html.DisplayFor(modelItem => item.RechargePlanPrice)</h3>
+            <div class="row" style="display: flex;margin-top:2em;">
+                <div class="col-md-6">
+                    <p style="color: #807D7D;">Validity</p>
+                    <p style="margin-top:-1em">@Html.DisplayFor(modelItem => item.RechargePlanValidity) Days</p>
+                </div>
+                <div class="col-md-6">
+                    <p style="color: #807D7D;">Data</p>
+                    <p style="margin-top:-1em">@Html.DisplayFor(modelItem => item.RechargePlanData) GB/Day</p>
+                </div>
+              
+            </div>
+            <button class="btn">RECHARGE</button>
+        </div>
+    }
+</div>

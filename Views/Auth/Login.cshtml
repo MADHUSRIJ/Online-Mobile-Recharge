@@ -1,0 +1,88 @@
+﻿@model UserDetailsModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutPartial.cshtml";
+}
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .login {
+        border-radius: 20px;
+        padding: 2em;
+        background: white;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    
+       
+    }
+
+    .btn {
+        background-color: #000 !important;
+        color: #fff !important;
+        font-size: 12px;
+        padding: 1em 5em 1em 5em;
+        border-radius: 10px;
+        margin-top: 2em;
+        font-weight: 500;
+    }
+
+    .form-group{
+        
+        margin-top:2em;
+    }
+
+    .form-group input{
+        margin-top: 1em;
+    }
+
+    .heading-text {
+        font-weight: 700;
+        color: #807D7D;
+    }
+
+    .price-text {
+        font-weight: bold;
+    }
+
+    .sub-text {
+        margin-top: -0.5em;
+        color: #807D7D;
+        font-size: 12px;
+    }
+
+</style>
+
+
+
+<div class="container">
+    <div class="row login">
+        <h3 class="price-text">EasyRecharge</h3>
+        <p class="sub-text">Login to your account to make your mobile recharge easy.</p>
+        <div class="">
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Number" class="control-label"> Mobile Number </label>
+                    <input asp-for="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn" />
+                </div>
+            </form>
+            <a asp-action="Create" asp-controller="Auth" class="btn" >Register</a>
+        </div>
+    </div>
+
+</div>

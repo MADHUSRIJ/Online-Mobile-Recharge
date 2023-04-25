@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Online_Mobile_Recharge;
 using Online_Mobile_Recharge.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Online_Mobile_Recharge.Controllers
 {
+   
     public class UserDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;
         public readonly UserDetailsModel userDetails = new UserDetailsModel();
-        public readonly ServiceProviderModel serviceProvider = new ServiceProviderModel();
-        public readonly RechargePlansModel rechargePlans = new RechargePlansModel();
+        public readonly List<RechargeLogsModel> rechargeLogs = new List<RechargeLogsModel>();
 
 
         public UserDetailsController(ApplicationDbContext context)
@@ -23,27 +28,20 @@ namespace Online_Mobile_Recharge.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetId(UserDetailsModel user)
-        {
-            return View();
-        }
-
-        // POST: UserDetails/GetId
-        [HttpPost]
-        public async Task<IActionResult> GetId()
-        {
-            int id = Convert.ToInt32(Request.Form["UserId"]);
-            Console.WriteLine(id);
-
-            return RedirectToAction("Index", new { id = id });
-        }
-
 
         // GET: UserDetails/Index/5
+        [Authorize]
         public async Task<IActionResult> Index(int? id)
         {
+            // Get the authenticated user's ID
+            string userId = User.FindFirst(ClaimTypes.Sid)?.Value;
 
+            Console.WriteLine("Index" + id);
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
 
             if (id == null || _context.UserDetailsModel == null)
             {
@@ -53,7 +51,9 @@ namespace Online_Mobile_Recharge.Controllers
             var userDetailsModel = await _context.UserDetailsModel
                 .Include(u => u.RechargePlans)
                 .Include(u => u.ServiceProvider)
+                .Include(w => w.Wallet)
                 .FirstOrDefaultAsync(m => m.UserId == id);
+
             if (userDetailsModel == null)
             {
                 return NotFound();
@@ -62,62 +62,28 @@ namespace Online_Mobile_Recharge.Controllers
             ViewBag.userDetails = userDetailsModel;
 
 
-            if (id == null || _context.ServiceProviderModel == null)
+            if (id == null || _context.RechargeLogsModel == null)
             {
                 return NotFound();
             }
 
-            var serviceProviderModel = await _context.ServiceProviderModel
-                .FirstOrDefaultAsync(m => m.ServiceProviderId == userDetailsModel.ServiceProviderId);
-            if (serviceProviderModel == null)
+            var rechargeLogsModel = await _context.RechargeLogsModel
+             .Include(r => r.RechargePlans)
+             .ThenInclude(rp => rp.ServiceProvider)
+             .Include(r => r.UserDetails)
+             .Where(m => m.UserId == id)
+             .ToListAsync();
+
+            if (rechargeLogsModel == null)
             {
                 return NotFound();
             }
 
-            ViewBag.serviceProvider = serviceProviderModel;
-            if (id == null || _context.RechargePlansModel == null)
-            {
-                return NotFound();
-            }
+            ViewBag.rechargeLogs = rechargeLogsModel;
 
-
-            var rechargePlansModel = await _context.RechargePlansModel
-                .Include(r => r.ServiceProvider)
-                .FirstOrDefaultAsync(m => m.RechargePlanId == userDetailsModel.RechargePlanId);
-            if (rechargePlansModel == null)
-            {
-                return NotFound();
-            }
-
-            ViewBag.rechargePlans = rechargePlansModel;
 
             return View();
 
-        }
-
-
-        // GET: UserDetails/Create
-        public IActionResult Create()
-        {
-            ViewData["RechargePlanId"] = new SelectList(_context.Set<RechargePlansModel>(), "RechargePlanId", "RechargePlanName");
-            ViewData["ServiceProviderId"] = new SelectList(_context.Set<ServiceProviderModel>(), "ServiceProviderId", "ServiceName");
-            return View();
-        }
-
-        // POST: UserDetails/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Number,ServiceProviderId,RechargePlanId,MailId,Password")] UserDetailsModel userDetailsModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(userDetailsModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RechargePlanId"] = new SelectList(_context.Set<RechargePlansModel>(), "RechargePlanId", "RechargePlanId", userDetailsModel.RechargePlanId);
-            ViewData["ServiceProviderId"] = new SelectList(_context.Set<ServiceProviderModel>(), "ServiceProviderId", "ServiceName", userDetailsModel.ServiceProviderId);
-            return View(userDetailsModel);
         }
 
         private bool UserDetailsModelExists(int id)

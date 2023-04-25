@@ -20,7 +20,7 @@ namespace Online_Mobile_Recharge.Models
         public string RechargeDate { get; set;}
 
         [Required]
-        public int RechargeValidity { get; set;}
+        public string RechargeValidity { get; set;}
 
         public virtual RechargePlansModel RechargePlans { get; set;}
 

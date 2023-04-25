@@ -48,6 +48,12 @@ namespace Online_Mobile_Recharge
                 .HasMany(s => s.RechargePlans)
                 .WithOne(r => r.ServiceProvider)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<WalletModel>()
+                .HasOne(r => r.UserDetails)
+                .WithOne(s => s.Wallet)
+                .HasForeignKey<UserDetailsModel>(r => r.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         public DbSet<Online_Mobile_Recharge.Models.UserDetailsModel>? UserDetailsModel { get; set; }
@@ -55,5 +61,9 @@ namespace Online_Mobile_Recharge
         public DbSet<Online_Mobile_Recharge.Models.ServiceProviderModel>? ServiceProviderModel { get; set; }
 
         public DbSet<Online_Mobile_Recharge.Models.RechargePlansModel>? RechargePlansModel { get; set; }
+
+        public DbSet<Online_Mobile_Recharge.Models.WalletModel>? WalletModel { get; set; }
+
+        public DbSet<Online_Mobile_Recharge.Models.RechargeLogsModel>? RechargeLogsModel { get; set; }
     }
 }
