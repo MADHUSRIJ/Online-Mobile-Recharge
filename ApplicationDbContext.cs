@@ -30,7 +30,7 @@ namespace Online_Mobile_Recharge
                 .HasOne(r => r.ServiceProvider)
                 .WithMany(s => s.RechargePlans)
                 .HasForeignKey(r => r.ServiceProviderId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<RechargeLogsModel>()
                 .HasOne(r => r.RechargePlans)
@@ -47,7 +47,7 @@ namespace Online_Mobile_Recharge
             modelBuilder.Entity<ServiceProviderModel>()
                 .HasMany(s => s.RechargePlans)
                 .WithOne(r => r.ServiceProvider)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WalletModel>()
                 .HasOne(r => r.UserDetails)

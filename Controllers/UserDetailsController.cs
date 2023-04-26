@@ -28,20 +28,26 @@ namespace Online_Mobile_Recharge.Controllers
             _context = context;
         }
 
+        [Authorize]
+        public ActionResult MiddleWareAction()
+        {
+            int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+
+            Console.WriteLine("Index Middle" + userId);
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
+            return RedirectToAction("Index", "UserDetails", new { id = userId });
+        }
 
         // GET: UserDetails/Index/5
         [Authorize]
         public async Task<IActionResult> Index(int? id)
         {
             // Get the authenticated user's ID
-            string userId = User.FindFirst(ClaimTypes.Sid)?.Value;
-
-            Console.WriteLine("Index" + id);
-
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Auth");
-            }
 
             if (id == null || _context.UserDetailsModel == null)
             {
